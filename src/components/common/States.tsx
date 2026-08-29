@@ -12,12 +12,12 @@ export function EmptyState({
   onAction,
   className,
 }: {
-  icon?: LucideIcon;
+  icon?: LucideIcon | undefined;
   title: string;
-  description?: string;
-  actionLabel?: string;
-  onAction?: () => void;
-  className?: string;
+  description?: string | undefined;
+  actionLabel?: string | undefined;
+  onAction?: (() => void) | undefined;
+  className?: string | undefined;
 }) {
   return (
     <div className={cn("flex flex-col items-center justify-center px-6 py-14 text-center", className)}>
