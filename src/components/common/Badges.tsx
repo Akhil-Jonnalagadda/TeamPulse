@@ -13,7 +13,7 @@ export function SeverityBadge({ severity, className }: { severity: string; class
     <span
       className={cn(
         "inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 text-[11px] font-semibold ring-1 ring-inset",
-        map[severity] ?? map.P4,
+        map[severity] ?? map["P4"],
         className,
       )}
       title={SEVERITY_LABEL[severity] ?? severity}
