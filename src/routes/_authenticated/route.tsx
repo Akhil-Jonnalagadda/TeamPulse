@@ -1,8 +1,9 @@
-import { createFileRoute, Outlet, redirect, useRouter } from "@tanstack/react-router";
+import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import { Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { AppShell } from "@/components/layout/AppShell";
 import { ErrorState } from "@/components/common/States";
+import { Button } from "@/components/ui/button";
 import { useCurrentUser } from "@/hooks/use-session";
 
 export const Route = createFileRoute("/_authenticated")({
@@ -19,10 +20,9 @@ export const Route = createFileRoute("/_authenticated")({
 });
 
 function ProtectedLayout() {
-  const { ready, profile, role } = useCurrentUser();
-  const router = useRouter();
+  const { ready, settled, profile, role, refetch } = useCurrentUser();
 
-  if (!ready || !profile || !role) {
+  if (!ready) {
     return (
       <div className="grid min-h-screen place-items-center">
         <div className="text-muted-foreground flex items-center gap-2 text-sm">
@@ -32,7 +32,16 @@ function ProtectedLayout() {
     );
   }
 
-  void router;
+  if (!profile || !role) {
+    return (
+      <div className="grid min-h-screen place-items-center p-6">
+        <div className="space-y-3 text-center">
+          <ErrorState message="We couldn't finish setting up your workspace profile." />
+          <Button onClick={() => void refetch()}>Try again</Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <AppShell profile={profile} role={role}>
