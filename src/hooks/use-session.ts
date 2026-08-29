@@ -39,8 +39,10 @@ export function useSupabaseSession() {
     });
     const { data: sub } = supabase.auth.onAuthStateChange((event, next) => {
       setSession(next);
-      if (event === "SIGNED_IN" || event === "SIGNED_OUT" || event === "USER_UPDATED") {
-        if (event !== "SIGNED_OUT") void queryClient.invalidateQueries();
+      setReady(true);
+      if (event === "SIGNED_OUT") queryClient.clear();
+      else if (event === "USER_UPDATED") {
+        void queryClient.invalidateQueries({ queryKey: ["current-user"] });
       }
     });
     return () => {
