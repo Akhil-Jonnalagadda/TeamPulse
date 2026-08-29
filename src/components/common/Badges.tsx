@@ -1,3 +1,4 @@
+import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { titleCase } from "@/lib/format";
 import { SEVERITY_LABEL } from "@/lib/constants";
