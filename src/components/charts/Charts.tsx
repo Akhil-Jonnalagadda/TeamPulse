@@ -226,7 +226,7 @@ export function BarsChart({
             key={s.key}
             dataKey={s.key}
             name={s.label}
-            stackId={stacked ? "a" : undefined}
+            {...(stacked ? { stackId: "a" } : {})}
             fill={s.color ?? CHART_COLORS[i % CHART_COLORS.length]}
             radius={stacked ? 2 : 4}
             animationDuration={700}
