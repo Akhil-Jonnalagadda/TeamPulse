@@ -131,11 +131,11 @@ function TodayPage() {
   });
 
   const saveUpdate = useMutation({
-    mutationFn: async (patch: Partial<UpdateRow>) => {
+    mutationFn: async (patch: Record<string, unknown>) => {
       const base = update ?? (await ensureUpdate.mutateAsync());
       const { data, error } = await supabase
         .from("daily_updates")
-        .update(patch)
+        .update(patch as never)
         .eq("id", base.id)
         .select("*")
         .single();
@@ -320,9 +320,9 @@ function TodayPage() {
                   min={0}
                   max={24}
                   step={0.5}
-                  defaultValue={update?.[field] ?? 0}
+                  defaultValue={update ? Number(update[field] ?? 0) : 0}
                   onBlur={(e) =>
-                    saveUpdate.mutate({ [field]: Number(e.target.value) || 0 } as Partial<UpdateRow>)
+                    saveUpdate.mutate({ [field]: Number(e.target.value) || 0 })
                   }
                 />
               </div>
@@ -362,16 +362,16 @@ function TodayPage() {
         render={(row) => (
           <>
             <div className="min-w-0">
-              <p className="truncate text-sm font-medium">{row.title as string}</p>
+              <p className="truncate text-sm font-medium">{row["title"] as string}</p>
               <p className="text-muted-foreground truncate text-xs">
-                {(row.category as string) ?? "Task"}
-                {row.ticket_number ? ` · ${row.ticket_number as string}` : ""} ·{" "}
-                {hours(row.time_spent as number)}
+                {(row["category"] as string) ?? "Task"}
+                {row["ticket_number"] ? ` · ${row["ticket_number"] as string}` : ""} ·{" "}
+                {hours(row["time_spent"] as number)}
               </p>
             </div>
             <div className="flex shrink-0 items-center gap-1.5">
-              <PriorityBadge priority={row.priority as string} />
-              <StatusBadge status={row.status as string} />
+              <PriorityBadge priority={row["priority"] as string} />
+              <StatusBadge status={row["status"] as string} />
             </div>
           </>
         )}
@@ -406,16 +406,16 @@ function TodayPage() {
           <>
             <div className="min-w-0">
               <p className="truncate text-sm font-medium">
-                {row.incident_number as string} · {row.title as string}
+                {row["incident_number"] as string} · {row["title"] as string}
               </p>
               <p className="text-muted-foreground truncate text-xs">
-                {(row.duration_minutes as number) || 0} min
-                {row.bridge_required ? " · bridge call" : ""}
+                {(row["duration_minutes"] as number) || 0} min
+                {row["bridge_required"] ? " · bridge call" : ""}
               </p>
             </div>
             <div className="flex shrink-0 items-center gap-1.5">
-              <SeverityBadge severity={row.severity as string} />
-              <StatusBadge status={row.status as string} />
+              <SeverityBadge severity={row["severity"] as string} />
+              <StatusBadge status={row["status"] as string} />
             </div>
           </>
         )}
@@ -444,9 +444,9 @@ function TodayPage() {
         render={(row) => (
           <>
             <div className="min-w-0">
-              <p className="truncate text-sm font-medium">{row.title as string}</p>
+              <p className="truncate text-sm font-medium">{row["title"] as string}</p>
               <p className="text-muted-foreground truncate text-xs">
-                {(row.call_type as string) ?? "Call"} · {(row.duration_minutes as number) || 0} min
+                {(row["call_type"] as string) ?? "Call"} · {(row["duration_minutes"] as number) || 0} min
               </p>
             </div>
           </>
@@ -478,12 +478,12 @@ function TodayPage() {
         render={(row) => (
           <>
             <div className="min-w-0">
-              <p className="truncate text-sm font-medium">{row.title as string}</p>
+              <p className="truncate text-sm font-medium">{row["title"] as string}</p>
               <p className="text-muted-foreground truncate text-xs">
-                {(row.reference_ticket as string) ?? "No ticket"}
+                {(row["reference_ticket"] as string) ?? "No ticket"}
               </p>
             </div>
-            <StatusBadge status={row.status as string} />
+            <StatusBadge status={row["status"] as string} />
           </>
         )}
       />
@@ -511,13 +511,13 @@ function TodayPage() {
         render={(row) => (
           <>
             <div className="min-w-0">
-              <p className="truncate text-sm font-medium">{row.title as string}</p>
+              <p className="truncate text-sm font-medium">{row["title"] as string}</p>
               <p className="text-muted-foreground truncate text-xs">
-                {(row.category as string) ?? "Learning"}
-                {row.technology ? ` · ${row.technology as string}` : ""}
+                {(row["category"] as string) ?? "Learning"}
+                {row["technology"] ? ` · ${row["technology"] as string}` : ""}
               </p>
             </div>
-            {Boolean(row.share_with_team) && <StatusBadge status="shared" />}
+            {Boolean(row["share_with_team"]) && <StatusBadge status="shared" />}
           </>
         )}
       />
@@ -544,12 +544,12 @@ function TodayPage() {
         render={(row) => (
           <>
             <div className="min-w-0">
-              <p className="truncate text-sm font-medium">{row.description as string}</p>
+              <p className="truncate text-sm font-medium">{row["description"] as string}</p>
               <p className="text-muted-foreground truncate text-xs">
-                {row.waiting_on ? `Waiting on ${row.waiting_on as string}` : "Unassigned"}
+                {row["waiting_on"] ? `Waiting on ${row["waiting_on"] as string}` : "Unassigned"}
               </p>
             </div>
-            <PriorityBadge priority={row.priority as string} />
+            <PriorityBadge priority={row["priority"] as string} />
           </>
         )}
       />
@@ -575,12 +575,12 @@ function TodayPage() {
         render={(row) => (
           <>
             <div className="min-w-0">
-              <p className="truncate text-sm font-medium">{row.task as string}</p>
+              <p className="truncate text-sm font-medium">{row["task"] as string}</p>
               <p className="text-muted-foreground truncate text-xs">
-                {(row.expected_outcome as string) ?? "No stated outcome"}
+                {(row["expected_outcome"] as string) ?? "No stated outcome"}
               </p>
             </div>
-            <PriorityBadge priority={row.priority as string} />
+            <PriorityBadge priority={row["priority"] as string} />
           </>
         )}
       />
@@ -722,13 +722,13 @@ function ChildSection({
       ) : (
         <ul className="divide-y">
           {rows.map((row) => (
-            <li key={String(row.id)} className="flex items-center gap-3 px-4 py-3">
+            <li key={String(row["id"])} className="flex items-center gap-3 px-4 py-3">
               {render(row)}
               <Button
                 size="icon"
                 variant="ghost"
                 className="text-muted-foreground hover:text-destructive ml-auto h-8 w-8 shrink-0"
-                onClick={() => remove.mutate(String(row.id))}
+                onClick={() => remove.mutate(String(row["id"]))}
                 aria-label="Delete entry"
               >
                 <Trash2 className="h-3.5 w-3.5" />
