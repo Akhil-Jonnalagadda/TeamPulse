@@ -59,22 +59,44 @@ export function useCurrentUser() {
   const query = useQuery({
     queryKey: ["current-user", userId],
     enabled: Boolean(userId),
-    staleTime: 60_000,
+    staleTime: 5 * 60_000,
+    gcTime: 30 * 60_000,
+    retry: 1,
     queryFn: async (): Promise<{ profile: Profile; role: AppRole } | null> => {
       if (!userId) return null;
-      const [{ data: profile }, { data: roles }] = await Promise.all([
-        supabase.from("profiles").select("*").eq("id", userId).maybeSingle(),
-        supabase.from("user_roles").select("role").eq("user_id", userId),
-      ]);
-      if (!profile) return null;
       const rank: AppRole[] = ["manager", "team_lead", "team_member"];
-      const found = rank.find((r) => (roles ?? []).some((x) => x.role === r));
-      return { profile: profile as Profile, role: found ?? "team_member" };
+
+      const load = async () => {
+        const [{ data: profile }, { data: roles }] = await Promise.all([
+          supabase.from("profiles").select("*").eq("id", userId).maybeSingle(),
+          supabase.from("user_roles").select("role").eq("user_id", userId),
+        ]);
+        return { profile: profile as Profile | null, roles: roles ?? [] };
+      };
+
+      let { profile, roles } = await load();
+
+      // First sign-in (e.g. Google): provision the profile once, then re-read.
+      if (!profile) {
+        const meta = session?.user.user_metadata ?? {};
+        const fullName =
+          (meta["full_name"] as string) ||
+          (meta["name"] as string) ||
+          session?.user.email?.split("@")[0] ||
+          "New member";
+        await supabase.rpc("ensure_profile", { _full_name: fullName });
+        ({ profile, roles } = await load());
+      }
+      if (!profile) return null;
+
+      const found = rank.find((r) => roles.some((x) => x.role === r));
+      return { profile, role: found ?? "team_member" };
     },
   });
 
   return {
-    ready: ready && (!userId || !query.isLoading),
+    ready: ready && (!userId || !query.isPending),
+    settled: ready && (!userId || query.isFetched),
     session,
     profile: query.data?.profile ?? null,
     role: query.data?.role ?? null,
@@ -82,6 +104,7 @@ export function useCurrentUser() {
     refetch: query.refetch,
   };
 }
+
 
 export function roleHome(role: AppRole | null): string {
   if (role === "manager") return "/dashboard/manager";
