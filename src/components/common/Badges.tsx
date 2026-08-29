@@ -75,3 +75,17 @@ export function PriorityBadge({ priority }: { priority: string }) {
           : "neutral";
   return <StatusBadge status={priority} tone={tone as keyof typeof TONES} />;
 }
+
+const ROLE_LABEL: Record<string, string> = {
+  manager: "Manager",
+  team_lead: "Team Lead",
+  team_member: "Team Member",
+};
+
+export function RoleBadge({ role }: { role: string }) {
+  return (
+    <Badge variant={role === "manager" ? "default" : role === "team_lead" ? "secondary" : "outline"}>
+      {ROLE_LABEL[role] ?? role}
+    </Badge>
+  );
+}
