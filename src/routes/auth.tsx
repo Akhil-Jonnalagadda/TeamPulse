@@ -224,7 +224,7 @@ function AuthPage() {
                   onChange={(e) => setForm((f) => ({ ...f, fullName: e.target.value }))}
                   placeholder="Alex Morgan"
                 />
-                {errors.fullName && <p className="text-destructive text-xs">{errors.fullName}</p>}
+                {errors["fullName"] && <p className="text-destructive text-xs">{errors["fullName"]}</p>}
               </div>
               <Fields form={form} setForm={setForm} errors={errors} />
               <Button
@@ -284,7 +284,7 @@ function Fields({
           onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
           placeholder="you@company.com"
         />
-        {errors.email && <p className="text-destructive text-xs">{errors.email}</p>}
+        {errors["email"] && <p className="text-destructive text-xs">{errors["email"]}</p>}
       </div>
       <div className="space-y-1.5">
         <Label htmlFor="password">Password</Label>
@@ -297,7 +297,7 @@ function Fields({
           onChange={(e) => setForm((f) => ({ ...f, password: e.target.value }))}
           placeholder="••••••••"
         />
-        {errors.password && <p className="text-destructive text-xs">{errors.password}</p>}
+        {errors["password"] && <p className="text-destructive text-xs">{errors["password"]}</p>}
       </div>
     </>
   );

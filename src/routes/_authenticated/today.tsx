@@ -657,10 +657,10 @@ function ChildSection({
       for (const [k, v] of Object.entries(payload)) {
         if (v === "none" || v === "") payload[k] = null;
       }
-      payload.user_id = userId;
-      payload.daily_update_id = parent.id;
-      if (withTeam) payload.team_id = teamId;
-      if (withWorkDate) payload.work_date = workDate;
+      payload["user_id"] = userId;
+      payload["daily_update_id"] = parent.id;
+      if (withTeam) payload["team_id"] = teamId;
+      if (withWorkDate) payload["work_date"] = workDate;
       const { error } = await supabase.from(table).insert(payload as never);
       if (error) throw error;
       if (activityAction && userId) {
