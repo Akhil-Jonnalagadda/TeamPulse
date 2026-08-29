@@ -76,3 +76,6 @@ export const DATE_PRESETS = [
 ] as const;
 
 export type DatePresetId = (typeof DATE_PRESETS)[number]["id"];
+
+export const CRITICALITIES = ["low", "medium", "high", "critical"] as const;
+export const SUPPORT_HOURS = ["24x7", "16x5", "8x5", "On-call"] as const;
