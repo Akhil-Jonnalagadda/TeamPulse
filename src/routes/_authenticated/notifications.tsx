@@ -27,13 +27,13 @@ export const Route = createFileRoute("/_authenticated/notifications")({
 const ICONS = { warning: AlertTriangle, error: ShieldAlert, success: CheckCheck, info: Info } as const;
 
 function NotificationsPage() {
-  const { user } = useCurrentUser();
+  const { profile } = useCurrentUser();
   const qc = useQueryClient();
   const [tab, setTab] = useState("all");
 
   const { data, isLoading } = useQuery({
-    queryKey: ["notifications", user?.id],
-    enabled: !!user?.id,
+    queryKey: ["notifications", profile?.id],
+    enabled: !!profile?.id,
     queryFn: async () => {
       const { data: rows } = await supabase
         .from("notifications")
