@@ -7,7 +7,7 @@ import {
   BookOpen,
   CalendarCheck,
   CheckCircle2,
-  ClipboardList,
+
   FlaskConical,
   ListTodo,
   Loader2,
@@ -752,4 +752,3 @@ function ChildSection({
   );
 }
 
-export const TodayIcons = { ClipboardList };
