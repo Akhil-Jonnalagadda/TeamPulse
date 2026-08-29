@@ -400,7 +400,7 @@ function TodayPage() {
           { name: "description", label: "What happened", type: "textarea", maxLength: 2000 },
           { name: "resolution", label: "Resolution", type: "textarea", maxLength: 2000 },
         ]}
-        activity={(v) => `logged incident ${String(v.incident_number)}`}
+        activity={(v) => `logged incident ${String(v["incident_number"])}`}
         activityAction="incident_logged"
         render={(row) => (
           <>
