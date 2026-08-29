@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
-import { titleCase, SEVERITY_LABEL } from "@/lib/format-badges";
+import { titleCase } from "@/lib/format";
+import { SEVERITY_LABEL } from "@/lib/constants";
 
 export function SeverityBadge({ severity, className }: { severity: string; className?: string }) {
   const map: Record<string, string> = {
