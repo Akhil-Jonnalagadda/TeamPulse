@@ -30,6 +30,7 @@ import { Route as AuthenticatedDashboardManagerRouteImport } from './routes/_aut
 import { Route as AuthenticatedDashboardMemberRouteImport } from './routes/_authenticated/dashboard.member'
 import { Route as AuthenticatedMyCallsRouteImport } from './routes/_authenticated/my.calls'
 import { Route as AuthenticatedMyIncidentsRouteImport } from './routes/_authenticated/my.incidents'
+import { Route as AuthenticatedMyLearningRouteImport } from './routes/_authenticated/my.learning'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -141,6 +142,11 @@ const AuthenticatedMyIncidentsRoute =
     path: '/my/incidents',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedMyLearningRoute = AuthenticatedMyLearningRouteImport.update({
+  id: '/my/learning',
+  path: '/my/learning',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -163,6 +169,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/member': typeof AuthenticatedDashboardMemberRoute
   '/my/calls': typeof AuthenticatedMyCallsRoute
   '/my/incidents': typeof AuthenticatedMyIncidentsRoute
+  '/my/learning': typeof AuthenticatedMyLearningRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -185,6 +192,7 @@ export interface FileRoutesByTo {
   '/dashboard/member': typeof AuthenticatedDashboardMemberRoute
   '/my/calls': typeof AuthenticatedMyCallsRoute
   '/my/incidents': typeof AuthenticatedMyIncidentsRoute
+  '/my/learning': typeof AuthenticatedMyLearningRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -209,6 +217,7 @@ export interface FileRoutesById {
   '/_authenticated/dashboard/member': typeof AuthenticatedDashboardMemberRoute
   '/_authenticated/my/calls': typeof AuthenticatedMyCallsRoute
   '/_authenticated/my/incidents': typeof AuthenticatedMyIncidentsRoute
+  '/_authenticated/my/learning': typeof AuthenticatedMyLearningRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -233,6 +242,7 @@ export interface FileRouteTypes {
     | '/dashboard/member'
     | '/my/calls'
     | '/my/incidents'
+    | '/my/learning'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -255,6 +265,7 @@ export interface FileRouteTypes {
     | '/dashboard/member'
     | '/my/calls'
     | '/my/incidents'
+    | '/my/learning'
   id:
     | '__root__'
     | '/'
@@ -278,6 +289,7 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard/member'
     | '/_authenticated/my/calls'
     | '/_authenticated/my/incidents'
+    | '/_authenticated/my/learning'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -435,6 +447,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMyIncidentsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/my/learning': {
+      id: '/_authenticated/my/learning'
+      path: '/my/learning'
+      fullPath: '/my/learning'
+      preLoaderRoute: typeof AuthenticatedMyLearningRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
@@ -457,6 +476,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardMemberRoute: typeof AuthenticatedDashboardMemberRoute
   AuthenticatedMyCallsRoute: typeof AuthenticatedMyCallsRoute
   AuthenticatedMyIncidentsRoute: typeof AuthenticatedMyIncidentsRoute
+  AuthenticatedMyLearningRoute: typeof AuthenticatedMyLearningRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -478,6 +498,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardMemberRoute: AuthenticatedDashboardMemberRoute,
   AuthenticatedMyCallsRoute: AuthenticatedMyCallsRoute,
   AuthenticatedMyIncidentsRoute: AuthenticatedMyIncidentsRoute,
+  AuthenticatedMyLearningRoute: AuthenticatedMyLearningRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
