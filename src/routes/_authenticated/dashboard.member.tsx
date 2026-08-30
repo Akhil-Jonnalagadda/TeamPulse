@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useCurrentUser } from "@/hooks/use-session";
+import { useRealtimeInvalidate } from "@/hooks/use-realtime";
 import { PageHeader, SectionCard } from "@/components/common/SectionCard";
 import { StatCard } from "@/components/common/StatCard";
 import { StatGridSkeleton, EmptyState } from "@/components/common/States";
