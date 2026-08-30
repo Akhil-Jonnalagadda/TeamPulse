@@ -1,0 +1,12 @@
+ALTER PUBLICATION supabase_realtime ADD TABLE public.calls;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.learnings;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.analyses;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.daily_tasks;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.tomorrow_plans;
+ALTER TABLE public.calls REPLICA IDENTITY FULL;
+ALTER TABLE public.learnings REPLICA IDENTITY FULL;
+ALTER TABLE public.analyses REPLICA IDENTITY FULL;
+ALTER TABLE public.daily_tasks REPLICA IDENTITY FULL;
+ALTER TABLE public.tomorrow_plans REPLICA IDENTITY FULL;
+ALTER TABLE public.incidents REPLICA IDENTITY FULL;
+ALTER TABLE public.daily_updates REPLICA IDENTITY FULL;

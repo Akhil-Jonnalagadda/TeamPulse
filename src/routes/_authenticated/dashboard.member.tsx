@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useCurrentUser } from "@/hooks/use-session";
+import { useRealtimeInvalidate } from "@/hooks/use-realtime";
 import { PageHeader, SectionCard } from "@/components/common/SectionCard";
 import { StatCard } from "@/components/common/StatCard";
 import { StatGridSkeleton, EmptyState } from "@/components/common/States";
@@ -41,6 +42,13 @@ export const Route = createFileRoute("/_authenticated/dashboard/member")({
 function MemberDashboard() {
   const { profile, teamId } = useCurrentUser();
   const userId = profile?.id;
+
+  useRealtimeInvalidate(
+    ["daily_updates", "daily_tasks", "incidents", "calls", "learnings", "blockers", "analyses"],
+    [["member-dashboard"]],
+    userId ? { filter: `user_id=eq.${userId}` } : {},
+  );
+
 
   const { data, isLoading } = useQuery({
     queryKey: ["member-dashboard", userId],

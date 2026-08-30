@@ -28,6 +28,9 @@ import { Route as AuthenticatedUpdatesRouteImport } from './routes/_authenticate
 import { Route as AuthenticatedDashboardLeadRouteImport } from './routes/_authenticated/dashboard.lead'
 import { Route as AuthenticatedDashboardManagerRouteImport } from './routes/_authenticated/dashboard.manager'
 import { Route as AuthenticatedDashboardMemberRouteImport } from './routes/_authenticated/dashboard.member'
+import { Route as AuthenticatedMyCallsRouteImport } from './routes/_authenticated/my.calls'
+import { Route as AuthenticatedMyIncidentsRouteImport } from './routes/_authenticated/my.incidents'
+import { Route as AuthenticatedMyLearningRouteImport } from './routes/_authenticated/my.learning'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -128,6 +131,22 @@ const AuthenticatedDashboardMemberRoute =
     path: '/dashboard/member',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedMyCallsRoute = AuthenticatedMyCallsRouteImport.update({
+  id: '/my/calls',
+  path: '/my/calls',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedMyIncidentsRoute =
+  AuthenticatedMyIncidentsRouteImport.update({
+    id: '/my/incidents',
+    path: '/my/incidents',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedMyLearningRoute = AuthenticatedMyLearningRouteImport.update({
+  id: '/my/learning',
+  path: '/my/learning',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -148,6 +167,9 @@ export interface FileRoutesByFullPath {
   '/dashboard/lead': typeof AuthenticatedDashboardLeadRoute
   '/dashboard/manager': typeof AuthenticatedDashboardManagerRoute
   '/dashboard/member': typeof AuthenticatedDashboardMemberRoute
+  '/my/calls': typeof AuthenticatedMyCallsRoute
+  '/my/incidents': typeof AuthenticatedMyIncidentsRoute
+  '/my/learning': typeof AuthenticatedMyLearningRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -168,6 +190,9 @@ export interface FileRoutesByTo {
   '/dashboard/lead': typeof AuthenticatedDashboardLeadRoute
   '/dashboard/manager': typeof AuthenticatedDashboardManagerRoute
   '/dashboard/member': typeof AuthenticatedDashboardMemberRoute
+  '/my/calls': typeof AuthenticatedMyCallsRoute
+  '/my/incidents': typeof AuthenticatedMyIncidentsRoute
+  '/my/learning': typeof AuthenticatedMyLearningRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -190,6 +215,9 @@ export interface FileRoutesById {
   '/_authenticated/dashboard/lead': typeof AuthenticatedDashboardLeadRoute
   '/_authenticated/dashboard/manager': typeof AuthenticatedDashboardManagerRoute
   '/_authenticated/dashboard/member': typeof AuthenticatedDashboardMemberRoute
+  '/_authenticated/my/calls': typeof AuthenticatedMyCallsRoute
+  '/_authenticated/my/incidents': typeof AuthenticatedMyIncidentsRoute
+  '/_authenticated/my/learning': typeof AuthenticatedMyLearningRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -212,6 +240,9 @@ export interface FileRouteTypes {
     | '/dashboard/lead'
     | '/dashboard/manager'
     | '/dashboard/member'
+    | '/my/calls'
+    | '/my/incidents'
+    | '/my/learning'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -232,6 +263,9 @@ export interface FileRouteTypes {
     | '/dashboard/lead'
     | '/dashboard/manager'
     | '/dashboard/member'
+    | '/my/calls'
+    | '/my/incidents'
+    | '/my/learning'
   id:
     | '__root__'
     | '/'
@@ -253,6 +287,9 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard/lead'
     | '/_authenticated/dashboard/manager'
     | '/_authenticated/dashboard/member'
+    | '/_authenticated/my/calls'
+    | '/_authenticated/my/incidents'
+    | '/_authenticated/my/learning'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -396,6 +433,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardMemberRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/my/calls': {
+      id: '/_authenticated/my/calls'
+      path: '/my/calls'
+      fullPath: '/my/calls'
+      preLoaderRoute: typeof AuthenticatedMyCallsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/my/incidents': {
+      id: '/_authenticated/my/incidents'
+      path: '/my/incidents'
+      fullPath: '/my/incidents'
+      preLoaderRoute: typeof AuthenticatedMyIncidentsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/my/learning': {
+      id: '/_authenticated/my/learning'
+      path: '/my/learning'
+      fullPath: '/my/learning'
+      preLoaderRoute: typeof AuthenticatedMyLearningRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
@@ -416,6 +474,9 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardLeadRoute: typeof AuthenticatedDashboardLeadRoute
   AuthenticatedDashboardManagerRoute: typeof AuthenticatedDashboardManagerRoute
   AuthenticatedDashboardMemberRoute: typeof AuthenticatedDashboardMemberRoute
+  AuthenticatedMyCallsRoute: typeof AuthenticatedMyCallsRoute
+  AuthenticatedMyIncidentsRoute: typeof AuthenticatedMyIncidentsRoute
+  AuthenticatedMyLearningRoute: typeof AuthenticatedMyLearningRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -435,6 +496,9 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardLeadRoute: AuthenticatedDashboardLeadRoute,
   AuthenticatedDashboardManagerRoute: AuthenticatedDashboardManagerRoute,
   AuthenticatedDashboardMemberRoute: AuthenticatedDashboardMemberRoute,
+  AuthenticatedMyCallsRoute: AuthenticatedMyCallsRoute,
+  AuthenticatedMyIncidentsRoute: AuthenticatedMyIncidentsRoute,
+  AuthenticatedMyLearningRoute: AuthenticatedMyLearningRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

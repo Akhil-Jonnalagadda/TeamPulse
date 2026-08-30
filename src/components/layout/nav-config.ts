@@ -42,10 +42,11 @@ export function navForRole(role: AppRole): NavGroup[] {
       {
         label: "My Records",
         items: [
-          { to: "/incidents", label: "My Incidents", icon: Activity },
-          { to: "/calls", label: "My Calls", icon: PhoneCall },
+          { to: "/my/incidents", label: "My Incidents", icon: Activity },
+          { to: "/my/calls", label: "My Calls", icon: PhoneCall },
           { to: "/analysis", label: "My Analysis", icon: FlaskConical },
-          { to: "/learning", label: "My Learning", icon: BookOpen },
+          { to: "/my/learning", label: "My Learning", icon: BookOpen },
+
         ],
       },
       {
@@ -81,6 +82,14 @@ export function navForRole(role: AppRole): NavGroup[] {
         { to: "/analysis", label: "Analysis", icon: FlaskConical },
         { to: "/learning", label: "Learning Hub", icon: BookOpen },
         { to: "/applications", label: "Applications", icon: AppWindow },
+      ],
+    },
+    {
+      label: "My Records",
+      items: [
+        { to: "/my/incidents", label: "My Incidents", icon: Activity },
+        { to: "/my/calls", label: "My Calls", icon: PhoneCall },
+        { to: "/my/learning", label: "My Learning", icon: BookOpen },
       ],
     },
     {
