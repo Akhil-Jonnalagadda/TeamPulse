@@ -42,6 +42,13 @@ function MemberDashboard() {
   const { profile, teamId } = useCurrentUser();
   const userId = profile?.id;
 
+  useRealtimeInvalidate(
+    ["daily_updates", "daily_tasks", "incidents", "calls", "learnings", "blockers", "analyses"],
+    [["member-dashboard"]],
+    userId ? { filter: `user_id=eq.${userId}` } : {},
+  );
+
+
   const { data, isLoading } = useQuery({
     queryKey: ["member-dashboard", userId],
     enabled: Boolean(userId),
