@@ -1,5 +1,5 @@
 # TeamPulse
-
+Live Link:: https://teampulse-operations.lovable.app
 **Real-Time Team Operations & Daily Productivity Dashboard**
 
 TeamPulse is a production-ready, full-stack web application for support and operations teams to capture daily work, track incidents, share learnings, and give managers real-time visibility into team productivity — all role-aware and live-updating.
