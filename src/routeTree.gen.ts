@@ -28,6 +28,7 @@ import { Route as AuthenticatedUpdatesRouteImport } from './routes/_authenticate
 import { Route as AuthenticatedDashboardLeadRouteImport } from './routes/_authenticated/dashboard.lead'
 import { Route as AuthenticatedDashboardManagerRouteImport } from './routes/_authenticated/dashboard.manager'
 import { Route as AuthenticatedDashboardMemberRouteImport } from './routes/_authenticated/dashboard.member'
+import { Route as AuthenticatedMyIncidentsRouteImport } from './routes/_authenticated/my.incidents'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -128,6 +129,12 @@ const AuthenticatedDashboardMemberRoute =
     path: '/dashboard/member',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedMyIncidentsRoute =
+  AuthenticatedMyIncidentsRouteImport.update({
+    id: '/my/incidents',
+    path: '/my/incidents',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -148,6 +155,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/lead': typeof AuthenticatedDashboardLeadRoute
   '/dashboard/manager': typeof AuthenticatedDashboardManagerRoute
   '/dashboard/member': typeof AuthenticatedDashboardMemberRoute
+  '/my/incidents': typeof AuthenticatedMyIncidentsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -168,6 +176,7 @@ export interface FileRoutesByTo {
   '/dashboard/lead': typeof AuthenticatedDashboardLeadRoute
   '/dashboard/manager': typeof AuthenticatedDashboardManagerRoute
   '/dashboard/member': typeof AuthenticatedDashboardMemberRoute
+  '/my/incidents': typeof AuthenticatedMyIncidentsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -190,6 +199,7 @@ export interface FileRoutesById {
   '/_authenticated/dashboard/lead': typeof AuthenticatedDashboardLeadRoute
   '/_authenticated/dashboard/manager': typeof AuthenticatedDashboardManagerRoute
   '/_authenticated/dashboard/member': typeof AuthenticatedDashboardMemberRoute
+  '/_authenticated/my/incidents': typeof AuthenticatedMyIncidentsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -212,6 +222,7 @@ export interface FileRouteTypes {
     | '/dashboard/lead'
     | '/dashboard/manager'
     | '/dashboard/member'
+    | '/my/incidents'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -232,6 +243,7 @@ export interface FileRouteTypes {
     | '/dashboard/lead'
     | '/dashboard/manager'
     | '/dashboard/member'
+    | '/my/incidents'
   id:
     | '__root__'
     | '/'
@@ -253,6 +265,7 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard/lead'
     | '/_authenticated/dashboard/manager'
     | '/_authenticated/dashboard/member'
+    | '/_authenticated/my/incidents'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -396,6 +409,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardMemberRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/my/incidents': {
+      id: '/_authenticated/my/incidents'
+      path: '/my/incidents'
+      fullPath: '/my/incidents'
+      preLoaderRoute: typeof AuthenticatedMyIncidentsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
@@ -416,6 +436,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardLeadRoute: typeof AuthenticatedDashboardLeadRoute
   AuthenticatedDashboardManagerRoute: typeof AuthenticatedDashboardManagerRoute
   AuthenticatedDashboardMemberRoute: typeof AuthenticatedDashboardMemberRoute
+  AuthenticatedMyIncidentsRoute: typeof AuthenticatedMyIncidentsRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -435,6 +456,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardLeadRoute: AuthenticatedDashboardLeadRoute,
   AuthenticatedDashboardManagerRoute: AuthenticatedDashboardManagerRoute,
   AuthenticatedDashboardMemberRoute: AuthenticatedDashboardMemberRoute,
+  AuthenticatedMyIncidentsRoute: AuthenticatedMyIncidentsRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
