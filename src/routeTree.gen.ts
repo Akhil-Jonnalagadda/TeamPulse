@@ -28,6 +28,7 @@ import { Route as AuthenticatedUpdatesRouteImport } from './routes/_authenticate
 import { Route as AuthenticatedDashboardLeadRouteImport } from './routes/_authenticated/dashboard.lead'
 import { Route as AuthenticatedDashboardManagerRouteImport } from './routes/_authenticated/dashboard.manager'
 import { Route as AuthenticatedDashboardMemberRouteImport } from './routes/_authenticated/dashboard.member'
+import { Route as AuthenticatedMyCallsRouteImport } from './routes/_authenticated/my.calls'
 import { Route as AuthenticatedMyIncidentsRouteImport } from './routes/_authenticated/my.incidents'
 
 const IndexRoute = IndexRouteImport.update({
@@ -129,6 +130,11 @@ const AuthenticatedDashboardMemberRoute =
     path: '/dashboard/member',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedMyCallsRoute = AuthenticatedMyCallsRouteImport.update({
+  id: '/my/calls',
+  path: '/my/calls',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedMyIncidentsRoute =
   AuthenticatedMyIncidentsRouteImport.update({
     id: '/my/incidents',
@@ -155,6 +161,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/lead': typeof AuthenticatedDashboardLeadRoute
   '/dashboard/manager': typeof AuthenticatedDashboardManagerRoute
   '/dashboard/member': typeof AuthenticatedDashboardMemberRoute
+  '/my/calls': typeof AuthenticatedMyCallsRoute
   '/my/incidents': typeof AuthenticatedMyIncidentsRoute
 }
 export interface FileRoutesByTo {
@@ -176,6 +183,7 @@ export interface FileRoutesByTo {
   '/dashboard/lead': typeof AuthenticatedDashboardLeadRoute
   '/dashboard/manager': typeof AuthenticatedDashboardManagerRoute
   '/dashboard/member': typeof AuthenticatedDashboardMemberRoute
+  '/my/calls': typeof AuthenticatedMyCallsRoute
   '/my/incidents': typeof AuthenticatedMyIncidentsRoute
 }
 export interface FileRoutesById {
@@ -199,6 +207,7 @@ export interface FileRoutesById {
   '/_authenticated/dashboard/lead': typeof AuthenticatedDashboardLeadRoute
   '/_authenticated/dashboard/manager': typeof AuthenticatedDashboardManagerRoute
   '/_authenticated/dashboard/member': typeof AuthenticatedDashboardMemberRoute
+  '/_authenticated/my/calls': typeof AuthenticatedMyCallsRoute
   '/_authenticated/my/incidents': typeof AuthenticatedMyIncidentsRoute
 }
 export interface FileRouteTypes {
@@ -222,6 +231,7 @@ export interface FileRouteTypes {
     | '/dashboard/lead'
     | '/dashboard/manager'
     | '/dashboard/member'
+    | '/my/calls'
     | '/my/incidents'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -243,6 +253,7 @@ export interface FileRouteTypes {
     | '/dashboard/lead'
     | '/dashboard/manager'
     | '/dashboard/member'
+    | '/my/calls'
     | '/my/incidents'
   id:
     | '__root__'
@@ -265,6 +276,7 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard/lead'
     | '/_authenticated/dashboard/manager'
     | '/_authenticated/dashboard/member'
+    | '/_authenticated/my/calls'
     | '/_authenticated/my/incidents'
   fileRoutesById: FileRoutesById
 }
@@ -409,6 +421,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardMemberRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/my/calls': {
+      id: '/_authenticated/my/calls'
+      path: '/my/calls'
+      fullPath: '/my/calls'
+      preLoaderRoute: typeof AuthenticatedMyCallsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/my/incidents': {
       id: '/_authenticated/my/incidents'
       path: '/my/incidents'
@@ -436,6 +455,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardLeadRoute: typeof AuthenticatedDashboardLeadRoute
   AuthenticatedDashboardManagerRoute: typeof AuthenticatedDashboardManagerRoute
   AuthenticatedDashboardMemberRoute: typeof AuthenticatedDashboardMemberRoute
+  AuthenticatedMyCallsRoute: typeof AuthenticatedMyCallsRoute
   AuthenticatedMyIncidentsRoute: typeof AuthenticatedMyIncidentsRoute
 }
 
@@ -456,6 +476,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardLeadRoute: AuthenticatedDashboardLeadRoute,
   AuthenticatedDashboardManagerRoute: AuthenticatedDashboardManagerRoute,
   AuthenticatedDashboardMemberRoute: AuthenticatedDashboardMemberRoute,
+  AuthenticatedMyCallsRoute: AuthenticatedMyCallsRoute,
   AuthenticatedMyIncidentsRoute: AuthenticatedMyIncidentsRoute,
 }
 
