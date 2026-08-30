@@ -65,7 +65,17 @@ export const Route = createFileRoute("/_authenticated/today")({
   component: TodayPage,
 });
 
+const HOUR_FIELDS = [
+  "productive_hours",
+  "support_hours",
+  "incident_hours",
+  "meeting_hours",
+  "analysis_hours",
+  "learning_hours",
+] as const;
+
 const opts = (list: readonly string[], label?: (v: string) => string) =>
+
   list.map((v) => ({ value: v, label: label ? label(v) : v }));
 
 interface UpdateRow {
@@ -133,15 +143,18 @@ function TodayPage() {
   const saveUpdate = useMutation({
     mutationFn: async (patch: Record<string, unknown>) => {
       const base = update ?? (await ensureUpdate.mutateAsync());
+      const merged = { ...base, ...patch } as Record<string, unknown>;
+      const total = HOUR_FIELDS.reduce((sum, f) => sum + (Number(merged[f]) || 0), 0);
       const { data, error } = await supabase
         .from("daily_updates")
-        .update(patch as never)
+        .update({ ...patch, total_hours: total } as never)
         .eq("id", base.id)
         .select("*")
         .single();
       if (error) throw error;
       return data as UpdateRow;
     },
+
     onSuccess: (row) => queryClient.setQueryData(key, row),
     onError: (e) => toast.error("Could not save", { description: (e as Error).message }),
   });
@@ -536,7 +549,7 @@ function TodayPage() {
           { name: "description", label: "Blocker", type: "text", required: true, maxLength: 300, full: true },
           { name: "priority", label: "Priority", type: "select", options: opts(PRIORITIES, titleCase) },
           { name: "waiting_on", label: "Waiting on", type: "text", maxLength: 120 },
-          { name: "expected_resolution", label: "Expected resolution", type: "text", maxLength: 120 },
+          { name: "expected_resolution", label: "Expected resolution", type: "date" },
           { name: "impact", label: "Impact", type: "textarea", maxLength: 1000 },
         ]}
         activityAction="blocker_created"
@@ -597,6 +610,24 @@ type ChildTable =
   | "blockers"
   | "tomorrow_plans";
 
+// daily_tasks and tomorrow_plans have no team_id / work_date columns.
+const TABLES_WITH_TEAM = new Set<ChildTable>([
+  "incidents",
+  "calls",
+  "analyses",
+  "learnings",
+  "blockers",
+]);
+const TABLES_WITH_WORK_DATE = new Set<ChildTable>([
+  "incidents",
+  "calls",
+  "analyses",
+  "learnings",
+  "blockers",
+]);
+
+
+
 function ChildSection({
   title,
   description,
@@ -653,16 +684,20 @@ function ChildSection({
   const add = useMutation({
     mutationFn: async (values: FormValues) => {
       const parent = updateId ? { id: updateId } : await ensure();
-      const payload: Record<string, unknown> = { ...values };
-      for (const [k, v] of Object.entries(payload)) {
-        if (v === "none" || v === "") payload[k] = null;
+      const payload: Record<string, unknown> = {};
+      for (const [k, v] of Object.entries(values)) {
+        // Drop blanks so column defaults apply instead of writing invalid nulls.
+        if (v === "none" || v === "" || v === null) continue;
+        payload[k] = v;
       }
       payload["user_id"] = userId;
       payload["daily_update_id"] = parent.id;
-      if (withTeam) payload["team_id"] = teamId;
-      if (withWorkDate) payload["work_date"] = workDate;
+      // Only send columns the table actually has.
+      if (withTeam && TABLES_WITH_TEAM.has(table)) payload["team_id"] = teamId;
+      if (withWorkDate && TABLES_WITH_WORK_DATE.has(table)) payload["work_date"] = workDate;
       const { error } = await supabase.from(table).insert(payload as never);
       if (error) throw error;
+
       if (activityAction && userId) {
         await supabase.from("activity_logs").insert({
           actor_id: userId,
