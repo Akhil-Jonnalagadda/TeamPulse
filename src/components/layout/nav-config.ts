@@ -85,6 +85,14 @@ export function navForRole(role: AppRole): NavGroup[] {
       ],
     },
     {
+      label: "My Records",
+      items: [
+        { to: "/my/incidents", label: "My Incidents", icon: Activity },
+        { to: "/my/calls", label: "My Calls", icon: PhoneCall },
+        { to: "/my/learning", label: "My Learning", icon: BookOpen },
+      ],
+    },
+    {
       label: "Insight",
       items: [
         { to: "/reports", label: "Reports", icon: FileBarChart },
